@@ -54,5 +54,5 @@ class ModifyHabitForm(tk.Frame):
     
         habit = Habit(habit_id, description, date_created, freq)
         habit.save_changes_to_db(self.controller.db)
-        messagebox.showinfo("Success", "Habit added successfully.")
+        messagebox.showinfo("Success", "Habit updated successfully.")
         self.controller.show_habits()

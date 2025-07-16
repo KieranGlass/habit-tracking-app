@@ -38,7 +38,7 @@ class LogHabit(tk.Frame):
         self.calendar_frame.grid_columnconfigure(0, weight=1)
         self.calendar_frame.grid_rowconfigure(0, weight=1)
                 
-        self.calendar = Calendar(self.calendar_frame, selectmode="day", date_pattern="y-mm-dd", background="#003366")
+        self.calendar = Calendar(self.calendar_frame, selectmode="day", date_pattern="y-mm-dd", maxdate=datetime.now().date(), background="#003366")
         self.calendar.grid(row=0, column=0, sticky="nsew")
 
         # Buttons
@@ -72,6 +72,9 @@ class LogHabit(tk.Frame):
     def save_interaction(self):
         
         current_date = datetime.now().strftime("%d/%m/%Y")
+        selected_date_str = self.calendar.get_date()
+        selected_date = datetime.strptime(selected_date_str, "%Y-%m-%d").strftime("%d/%m/%Y")
+        print(f"{selected_date}")
         
         selected_item = self.tree.selection()
         if selected_item:
@@ -82,9 +85,12 @@ class LogHabit(tk.Frame):
             messagebox.showerror("Error", "Nothing Selected!")
             return
         
-        interaction = Completion(None, habit_id, current_date)
-        interaction.save_to_db(self.controller.db)
-        
+        if selected_date:
+            interaction = Completion(None, habit_id, selected_date)
+            interaction.save_to_db(self.controller.db)
+        else:
+            interaction = Completion(None, habit_id, current_date)
+            interaction.save_to_db(self.controller.db)
         self.load_habits()
         
     def on_tree_select(self, event):

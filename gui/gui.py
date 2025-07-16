@@ -1,5 +1,4 @@
 import tkinter as tk
-from tkinter import messagebox
 
 from gui.main_menu import MainMenu
 
@@ -16,7 +15,7 @@ class Gui(tk.Tk):
     def __init__(self, db):
         super().__init__()
         self.db = db
-        self.title("Small Steps")
+        self.title("Habit Tracker")
         self.geometry("400x400")
         self.current_frame = None
 

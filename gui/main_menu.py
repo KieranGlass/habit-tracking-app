@@ -10,7 +10,7 @@ class MainMenu(tk.Frame):
         for i in range(10):
             self.rowconfigure(i, weight=1)
 
-        tk.Label(self, text="Welcome to Small Steps!", font=("Arial", 14)).grid(row=0, column=0, pady=5, sticky="n")
+        tk.Label(self, text="Habit Tracker", font=("Arial", 14)).grid(row=0, column=0, pady=5, sticky="n")
 
         menu_options = [
             ("1. Complete Habit", controller.show_log_interaction),
