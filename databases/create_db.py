@@ -9,7 +9,7 @@ Structured like this as it adheres to OOP best practice, promoting encapsulation
 
 class Database:
     
-    def __init__(self, db_filename='open_line.db'):
+    def __init__(self, db_filename='production.db'):
         '''Creates the connection to the sqlite db'''
         base_dir = os.path.dirname(os.path.abspath(__file__))
         self.db_path = os.path.join(base_dir, db_filename)
