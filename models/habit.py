@@ -1,4 +1,4 @@
-from database import Database
+from databases.create_db import Database
 import sqlite3
 from contextlib import closing
 

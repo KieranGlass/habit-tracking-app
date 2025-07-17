@@ -45,7 +45,6 @@ class LogHabit(tk.Frame):
         button_frame = tk.Frame(self)
         button_frame.grid(row=3, column=0, pady=10)
         
-        
         tk.Button(button_frame, text="Complete", command=self.save_interaction).grid(row=0, column=0, padx=5)
         tk.Button(button_frame, text="Back", command=self.controller.show_main_menu).grid(row=0, column=1, padx=5)
 

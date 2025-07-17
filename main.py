@@ -1,4 +1,4 @@
-from database import Database
+from databases.create_db import Database
 from gui.gui import Gui
 
 class App:

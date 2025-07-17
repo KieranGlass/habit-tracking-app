@@ -1,10 +1,9 @@
-from database import Database
+from databases.create_db import Database
 import sqlite3
 from contextlib import closing
 
-
-
 class Completion:
+    
     def __init__(self, id, habit_id, date):
         self.id = id
         self.habit_id = habit_id

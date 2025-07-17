@@ -1,7 +1,7 @@
 import tkinter as tk
 from tkinter import ttk
 
-import analytics
+from analytics import analytics
 from models.completion import Completion
 
 
