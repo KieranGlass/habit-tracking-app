@@ -1,6 +1,16 @@
 import pytest
 from models.habit import Habit
 
+"""
+    Tests for the Habit Model
+    
+    Tests written for all methods within the Habit Model
+    
+    Tests use a specific test database as these tests are only interested in
+    testing the functionality of the methods.
+    
+"""
+
 def test_fetch_all_habits(test_db):
     
     habits = Habit.fetch_all(test_db)

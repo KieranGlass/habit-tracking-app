@@ -7,9 +7,14 @@ Habit = namedtuple("Habit", ["id", "description", "date_created", "frequency"])
 Completion = namedtuple("Completion", ["habit_id", "date"])
 
 
-'''Following tests are unit tests, testing the get_longest streak method 
+'''
+Tests for the Analytics Module
+
+Following tests are unit tests, testing the get_longest streak method 
 in the analytics module to ensure it handles daily, weekly and monthly cases
-properly as well as when there are no completions at all'''
+properly as well as when there are no completions at all
+
+'''
 
 # Daily
 def test_daily_longest_streak():

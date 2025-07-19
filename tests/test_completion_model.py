@@ -1,5 +1,13 @@
 from models.completion import Completion
 
+"""
+    Tests for the Completion Model
+    
+    Tests written for all methods within the Completion Model
+    
+    Tests use a specific test database as these tests are only interested in
+    testing the functionality of the methods.
+"""
 
 def test_get_all_completions(test_db):
     

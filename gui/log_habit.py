@@ -7,7 +7,25 @@ from datetime import datetime
 from models.habit import Habit
 from models.completion import Completion
 
-
+"""
+    Gui Window for logging a new completion of a habit
+    
+    Like the habit page, contains a treeview with all habits listed, however, in this location
+    the treeview also contains the date of the last completion for each habit
+    
+    Page contains a calendar. When a habit is selected, current completions for that habit are 
+    visible in green so that users can visualize their progress.
+    
+    When a habit is selected, the complete button is clicked to log a new completion and persist it
+    to the db. If no date has been selected when completing a habit, the completion is logged for the current
+    date. Otherwise it is logged for the date selected. 
+    
+    Dates can be completed in the past, although this probably isnt the best practice from a user perspective, it 
+    is natural that users may forget or be unable to log their completion on the day every time. Future completions 
+    can not be logged as the calendar has a maxdate attribute set to today.
+    
+    
+"""
 class LogHabit(tk.Frame):
     def __init__(self, controller):
         super().__init__(controller)
@@ -90,6 +108,7 @@ class LogHabit(tk.Frame):
         else:
             interaction = Completion(None, habit_id, current_date)
             interaction.save_to_db(self.controller.db)
+            
         self.load_habits()
         
     def on_tree_select(self, event):

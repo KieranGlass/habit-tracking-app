@@ -2,10 +2,27 @@ import sqlite3
 from contextlib import closing
 import os
 
-'''Notes for reader, 
+"""Production SQLite db to be used with application
+
+
 Database class will only contain connections and schema-level stuff, not individual records.
-So for example, creating a new person will be handled by the person class.
-Structured like this as it adheres to OOP best practice, promoting encapsulation and reusability'''
+So for example, creating a new habit will be handled by the habit class.
+Structured like this as it adheres to OOP best practice, promoting encapsulation and reusability
+
+Completely separate from the test_db
+
+Pre-populted with a handful of habits to provide the user with intuitive usage, the 
+habits already in system can be easily deleted by user if not applicable to them
+
+All id numbers for Habits and completions are autoincrementing and handled by the db
+
+Input fields throughout the application are controlled with validations to ensure that data
+in the db is of one of the correct types and formats.
+
+For example a date will always be formatted in the code to be DD/MM/YYYY and user can only ever enter a
+'Daily', 'Weekly', 'Monthly' input for frequencies.
+
+"""
 
 class Database:
     

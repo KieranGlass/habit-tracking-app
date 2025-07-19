@@ -2,6 +2,23 @@ from databases.create_db import Database
 import sqlite3
 from contextlib import closing
 
+"""
+    Model for a Completion
+    
+    Comprised of three attributes
+    
+    id - autoincrementing and handled by db
+    habit_id - foreign key linked to Habit
+    date - the date of the habit completion
+    
+    Contains methods for;
+    
+    - Saving new completions to the db
+    - Getting all completions
+    - Getting completions based on habit id
+    - Deleting completions
+
+"""
 class Completion:
     
     def __init__(self, id, habit_id, date):

@@ -4,7 +4,24 @@ from models.habit import Habit
 from gui.add_habit import AddHabitForm
 from gui.modify_habit import ModifyHabitForm
 
-
+"""
+    Gui Window for the applications Habits
+    
+    Treeview displays all habits currently within the system
+    
+    Buttons are present to add a new habit, modify an existing habit
+    and delete a habit.
+    
+    Delete is handled immediately on this page, whereas adding a new
+    habit and modifying a habit is handled in new gui windows
+    
+    When db operations are carried out, the treeview is reloaded to ensure
+    it always displays correct operation. 
+    
+    Operations like delete and modify are tied to the selected item in the treeview 
+    to avoid errors.
+    
+"""
 class HabitView(tk.Frame):
     def __init__(self, controller):
         super().__init__(controller)

@@ -9,6 +9,24 @@ from gui.add_habit import AddHabitForm
 from gui.modify_habit import ModifyHabitForm
 from gui.display_analytics import DisplayAnalytics
 
+"""
+    The Main Gui Class 
+    
+    Main Gui that commences its mainloop when application is run.
+    
+    It is the parent for all other Gui windows through the use of 
+    super().__init__(controller). 
+    
+    Sets the window size and window title for all following windows.
+    
+    Automatically displays the main_menu Gui.
+    
+    The switch_frame method is hooked up to buttons throughout the
+    application and provides the means of navigation throughout the 
+    app
+    
+    
+"""
 
 
 class Gui(tk.Tk):

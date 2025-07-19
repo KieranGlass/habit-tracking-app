@@ -3,8 +3,19 @@ from tkinter import ttk
 
 from analytics import analytics
 from models.completion import Completion
+from models.habit import Habit
 
-
+"""
+    Gui Window for displaying the results of the analytics module
+    
+    Contains immediate information about the longest ever and longest current streaks
+    
+    A treeview widget that is linked to a dropdown combobox that can display all the habits
+    in the system, can display all the habits of a certain frequency requirement, which is
+    controlled by a second combobox. and finally current and longest streaks for every
+    habit in the system.
+    
+"""
 class DisplayAnalytics(tk.Frame):
     def __init__(self, controller):
         super().__init__(controller)
@@ -101,13 +112,13 @@ class DisplayAnalytics(tk.Frame):
             self.frequency_dropdown.grid_remove()  # Hide it
 
         if selected == "All Habits":
-            habits = analytics.get_all_habits(self.controller.db)
+            habits = Habit.fetch_all(self.controller.db)
             rows = [(h.description, h.date_created, h.frequency) for h in habits]
             self.populate_tree(rows, columns=("Description", "Date Created", "Frequency"))
 
         elif selected == "Habits by Frequency":
             freq = self.selected_frequency.get()
-            habits = analytics.get_habits_by_frequency(self.controller.db, freq)
+            habits = Habit.get_habits_by_frequency(self.controller.db, freq)
             rows = [(h.description, h.date_created, h.frequency) for h in habits]
             self.populate_tree(rows, columns=("Description", "Date Created", "Frequency"))
             print(f"{rows}")

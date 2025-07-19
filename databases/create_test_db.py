@@ -3,6 +3,19 @@ from contextlib import closing
 
 class TestDatabase:
     
+    """    In-memory test database for unit and integration tests.
+    
+    Test_db connects only in memory, meaning that the test db doesnt persist
+    between sessions and it created as specified below everytime the application is run
+    
+    This is necesarry for the unit and intergation tests of the models and analytics module
+    otherwise, tests looking for specific id's would potentially stop working as expected
+    
+    The schema mirrors excatly the real production db in terms of tables, data types and columns.
+    the only difference is that the production db contains a handful of prepopulated habits to 
+    provide the user a more usable product, the test db contains many more habits and completions 
+    so that there are more testing opportunities."""
+    
     def __init__(self):
         """Creates a fresh in-memory test database with test-specific data."""
         self.conn = sqlite3.connect(":memory:")

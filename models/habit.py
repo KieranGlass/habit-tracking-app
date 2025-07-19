@@ -2,6 +2,27 @@ from databases.create_db import Database
 import sqlite3
 from contextlib import closing
 
+
+"""
+    Model for a Habit
+    
+    Comprised of four attributes
+    
+    id - autoincrementing and handled by db
+    description - name of the habit (Brush Teeth), only attribute in app that is not heavily controlled for input
+    date_created - date the habit was created
+    frequency - how often the habit should be completed (daily, weekly, monthly)
+    
+     Contains methods for;
+    
+    - adding new habits to the db
+    - modifying existing habits in the db
+    - Getting all habits
+    - Get on specific habit
+    - Get Habits based on frequency
+    - Deleting a habit
+
+"""
 class Habit:
     def __init__(self, id, description, date_created, frequency):
         self.id = id
@@ -43,6 +64,10 @@ class Habit:
             cursor.execute("SELECT id, description, date_created, frequency FROM habits WHERE id=?", (id,))
             habit = cursor.fetchall()
             return habit
+        
+    def get_habits_by_frequency(db, frequency):
+        habits = Habit.fetch_all(db)
+        return list(filter(lambda habit: habit.frequency == frequency, habits))
 
     def delete(db, id):
         try:

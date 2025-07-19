@@ -4,6 +4,16 @@ from datetime import datetime
 
 from models.habit import Habit
 
+"""
+    Gui window for modifying an existing habit
+    
+    Same window layout as the add new habit window.
+    
+    However this window populates the inputs with the habits current attributes
+    saved in the db. the user can than alter these and upon clicking submit the 
+    changes are persisted to the db
+    
+"""
 class ModifyHabitForm(tk.Frame):
     def __init__(self, controller, id):
         super().__init__(controller)

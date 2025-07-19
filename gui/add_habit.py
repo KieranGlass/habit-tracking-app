@@ -4,6 +4,15 @@ from datetime import datetime
 
 from models.habit import Habit
 
+"""
+    Gui Window for creating/adding a new habit
+    
+    Provides inputs to the user for assigning values to the new habits attributes
+    
+    when submit is clicked the new habit is added to the db, but only if the inputs fields 
+    are not empty. The input validations here ensure there is no bad information in the db
+    
+"""
 
 class AddHabitForm(tk.Frame):
     def __init__(self, controller):

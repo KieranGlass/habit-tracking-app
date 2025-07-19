@@ -1,6 +1,14 @@
 import tkinter as tk
 
-
+"""
+    Gui Main Menu Window
+    
+    A simple window containing buttons to naviagte around the app
+    
+    Is the window first initialised by the GUI class when the application
+    is run and therefore the first window a user will see.
+    
+"""
 class MainMenu(tk.Frame):
     def __init__(self, controller):
         super().__init__(controller)

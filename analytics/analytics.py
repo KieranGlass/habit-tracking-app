@@ -3,12 +3,19 @@ from datetime import datetime, timedelta
 from models.habit import Habit
 from models.completion import Completion
 
-def get_all_habits(db):
-    return Habit.fetch_all(db)
+"""
+Analytics module for calculating habit streaks.
 
-def get_habits_by_frequency(db, frequency):
-    habits = Habit.fetch_all(db)
-    return list(filter(lambda habit: habit.frequency == frequency, habits))
+This module processes information about Habit and Completion models:
+
+- the longest ongoing current streak per habit,
+- the longest ongoing current streak overall
+- the longest historical streak per habit,
+- the longest historical streak overall
+
+
+"""
+
 
 def get_longest_current_streak(db):
     habits = Habit.fetch_all(db)
