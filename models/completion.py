@@ -32,7 +32,7 @@ class Completion:
             print(f"Failed to get completions: {e}")
               
     
-    def get_interactions_by_habit(db, habit_id):
+    def get_completions_by_habit(db, habit_id):
         try:
             with closing(db.conn.cursor()) as cursor:
                 cursor.execute("SELECT id, date FROM interactions WHERE habit_id=?", (habit_id,))

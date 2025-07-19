@@ -19,7 +19,7 @@ def run_tests():
     print(result.stdout)
     if result.returncode != 0:
         print("Tests failed! Exiting.")
-        sys.exit(1)  # Stop running the program if tests fail
+        sys.exit(1)  # Stop running the program if tests fail, TODO handle this for production as test failure will make program unrunable
 
 run_tests()
 

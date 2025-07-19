@@ -58,7 +58,7 @@ class LogHabit(tk.Frame):
 
         habit = Habit.fetch_all(self.controller.db)
         for p in habit:
-            interactions = Completion.get_interactions_by_habit(self.controller.db, p.id)
+            interactions = Completion.get_completions_by_habit(self.controller.db, p.id)
             
             if interactions:
                 most_recent = max(interactions, key=lambda x: datetime.strptime(x[1], "%d/%m/%Y"))
@@ -106,7 +106,7 @@ class LogHabit(tk.Frame):
         self.calendar.calevent_remove("all")
 
         # Get all interactions for this habit
-        interactions = Completion.get_interactions_by_habit(self.controller.db, habit_id)
+        interactions = Completion.get_completions_by_habit(self.controller.db, habit_id)
 
         # Highlight the dates on the calendar
         for _, date_str in interactions:
