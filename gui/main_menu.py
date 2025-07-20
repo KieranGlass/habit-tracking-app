@@ -1,4 +1,5 @@
 import tkinter as tk
+from tkinter import ttk
 
 """
     Gui Main Menu Window
@@ -27,5 +28,6 @@ class MainMenu(tk.Frame):
         ]
 
         for i, (text, command) in enumerate(menu_options):
-            btn = tk.Button(self, text=text, command=command, width=30)
+            btn = ttk.Button(self, text=text, command=command, width=30)
             btn.grid(row=i + 2, column=0, pady=2, sticky="n")
+            btn.configure(style="MainMenu.TButton")

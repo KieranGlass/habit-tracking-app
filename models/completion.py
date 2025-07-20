@@ -2,6 +2,8 @@ from databases.create_db import Database
 import sqlite3
 from contextlib import closing
 
+from tkinter import messagebox
+
 """
     Model for a Completion
     
@@ -57,5 +59,16 @@ class Completion:
                 return interactions
         except sqlite3.Error as e:
             print(f"Failed to insert habit: {e}")
+            
+    def delete_completion(db, completion_id):
+        try:
+            with closing(db.conn.cursor()) as cursor:
+                cursor.execute("DELETE FROM interactions WHERE id=?", (completion_id,))
+                db.conn.commit()
+                messagebox.showinfo("Success", "Completion has been deleted")
+            return True
+        except sqlite3.Error as e:
+            print(f"Delete error: {e}")
+            return False
                                
                                

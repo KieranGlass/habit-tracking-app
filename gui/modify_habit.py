@@ -1,5 +1,5 @@
 import tkinter as tk
-from tkinter import messagebox
+from tkinter import messagebox, ttk
 from datetime import datetime
 
 from models.habit import Habit
@@ -47,8 +47,13 @@ class ModifyHabitForm(tk.Frame):
         frequencies = ["Daily", "Weekly", "Monthly"]
         tk.OptionMenu(self, self.freq_var, *frequencies).grid(row=10, column=0,  columnspan=2, pady=(0, 8))
 
-        tk.Button(self, text="Submit", command=lambda : self.save_habit(habit_id, date_created)).grid(row=13, column=1, pady=5)
-        tk.Button(self, text="Back", command=self.controller.show_habits).grid(row=14, column=0, pady=5)
+        submit_button = ttk.Button(self, text="Submit", command=self.save_habit)
+        submit_button.grid(row=13, column=1, pady=5)
+        submit_button.configure(style="Complete.TButton")
+        
+        back_button = ttk.Button(self, text="Back", command=self.controller.show_habits)
+        back_button.grid(row=13, column=0, pady=5)
+        back_button.configure(style="Back.TButton")
 
     def save_habit(self, id, date_created):
         

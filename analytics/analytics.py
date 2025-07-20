@@ -12,6 +12,7 @@ This module processes information about Habit and Completion models:
 - the longest ongoing current streak overall
 - the longest historical streak per habit,
 - the longest historical streak overall
+- Success Percentage for all of the habits
 
 
 """
@@ -158,4 +159,59 @@ def get_current_streak(habit, completions):
                     break
 
     return streak
+
+def get_all_success_percentages(db):
+    
+    habits = Habit.fetch_all(db)
+    
+    success_percentage_list = []
+
+    for h in habits:
+        success_percentage_list.append([h.description, get_success_percentage(db, h)])
+        
+    print(success_percentage_list)
+    return success_percentage_list
+
+def get_success_percentage(db, habit):
+    date_created = habit.date_created
+    start_date = datetime.strptime(date_created, "%d/%m/%Y")
+    today = datetime.today()
+
+    relevant_completions = Completion.get_completions_by_habit(db, habit.id)
+
+    if habit.frequency == "Daily":
+        total_days = (today - start_date).days
+
+        if total_days == 0 or len(relevant_completions) == 0:
+            success_percentage = 0
+        else:
+            success_percentage = round(len(relevant_completions) / total_days * 100, 2)
+
+    elif habit.frequency == "Weekly":
+        total_weeks = (today - start_date).days // 7
+
+        if total_weeks == 0 or len(relevant_completions) == 0:
+            success_percentage = 0
+        else:
+            success_percentage = round(len(relevant_completions) / total_weeks * 100, 2)
+
+    elif habit.frequency == "Monthly":
+        total_months = (today.year - start_date.year) * 12 + (today.month - start_date.month)
+        if today.day >= start_date.day:
+            total_months += 1
+
+        if total_months == 0 or len(relevant_completions) == 0:
+            success_percentage = 0
+        else:
+            success_percentage = round(len(relevant_completions) / total_months * 100, 2)
+
+    else:
+        success_percentage = 0 
+
+    print(success_percentage)
+    return str(success_percentage)
+        
+        
+    
+    
 

@@ -52,10 +52,21 @@ class HabitView(tk.Frame):
         button_frame = tk.Frame(self)
         button_frame.grid(row=2, column=0, pady=10)
 
-        tk.Button(button_frame, text="Add Habit", command=self.open_add_habit).grid(row=0, column=0, padx=5)
-        tk.Button(button_frame, text="Modify Habit", command=self.modify_habit).grid(row=0, column=1, padx=5)
-        tk.Button(button_frame, text="Delete Habit", command=self.delete_habit).grid(row=0, column=2, padx=5)
-        tk.Button(button_frame, text="Back", command=self.controller.show_main_menu).grid(row=0, column=3, padx=5)
+        add_button = ttk.Button(button_frame, text="Add Habit", command=self.open_add_habit)
+        add_button.grid(row=0, column=0, padx=5)
+        add_button.configure(style="Add.TButton")
+        
+        modify_button = ttk.Button(button_frame, text="Modify Habit", command=self.modify_habit)
+        modify_button.grid(row=0, column=1, padx=5)
+        modify_button.configure(style="Modify.TButton")
+        
+        delete_button = ttk.Button(button_frame, text="Delete Habit", command=self.delete_habit)
+        delete_button.grid(row=0, column=2, padx=5)
+        delete_button.configure(style="Delete.TButton")
+        
+        back_button = ttk.Button(button_frame, text="Back", command=self.controller.show_main_menu)
+        back_button.grid(row=0, column=3, padx=5)
+        back_button.configure(style="BackHabit.TButton")
 
         self.load_habits()
 

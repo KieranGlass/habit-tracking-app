@@ -63,8 +63,17 @@ class LogHabit(tk.Frame):
         button_frame = tk.Frame(self)
         button_frame.grid(row=3, column=0, pady=10)
         
-        tk.Button(button_frame, text="Complete", command=self.save_interaction).grid(row=0, column=0, padx=5)
-        tk.Button(button_frame, text="Back", command=self.controller.show_main_menu).grid(row=0, column=1, padx=5)
+        complete_button = ttk.Button(button_frame, text="Complete", command=self.save_interaction)
+        complete_button.grid(row=0, column=0, padx=5)
+        complete_button.configure(style="Complete.TButton")
+        
+        delete_button = ttk.Button(button_frame, text="Delete", command=self.delete_interaction)
+        delete_button.grid(row=0, column=1, padx=5)
+        delete_button.configure(style="DeleteCompletion.TButton")
+        
+        back_button = ttk.Button(button_frame, text="Back", command=self.controller.show_main_menu)
+        back_button.grid(row=0, column=2, padx=5)
+        back_button.configure(style="Back.TButton")
 
         self.load_habits()
 
@@ -108,6 +117,36 @@ class LogHabit(tk.Frame):
         else:
             interaction = Completion(None, habit_id, current_date)
             interaction.save_to_db(self.controller.db)
+            
+        self.load_habits()
+        
+    def delete_interaction(self):
+        
+        selected_date_str = self.calendar.get_date()
+        selected_date = datetime.strptime(selected_date_str, "%Y-%m-%d").strftime("%d/%m/%Y")
+        print(f"{selected_date}")
+        
+        selected_item = self.tree.selection()
+        if selected_item:
+            item = selected_item[0]
+            values = self.tree.item(item, "values")
+            habit_id = values[0]
+        else:
+            messagebox.showerror("Error", "Nothing Selected!")
+            return
+        
+        if selected_date:
+            interactions = Completion.get_completions_by_habit(self.controller.db, habit_id)
+            
+            print(interactions)
+            
+            for i in interactions:
+                if i[1] == selected_date:
+                    Completion.delete_completion(self.controller.db, i[0])
+            
+        else:
+            messagebox.showerror("Error", "No Date Selected!")
+            return
             
         self.load_habits()
         

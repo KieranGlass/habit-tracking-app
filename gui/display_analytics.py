@@ -35,7 +35,8 @@ class DisplayAnalytics(tk.Frame):
         options = [
             "All Habits",
             "Habits by Frequency",
-            "Streaks per Habit"
+            "Streaks per Habit",
+            "Completion Success (%)"
         ]
         
         frequency_options = [
@@ -51,12 +52,20 @@ class DisplayAnalytics(tk.Frame):
         
         current_habit, current_streak = analytics.get_longest_current_streak(self.controller.db)
         
-        current_streak_label = tk.Label(self, text="Longest Current Streak:\n" +  current_habit.description + " - " + str(current_streak))
+        if current_habit is None:
+            current_streak_label = tk.Label(self, text="Longest Current Streak:\nN/A")
+        else:
+            current_streak_label = tk.Label(self, text="Longest Current Streak:\n" + current_habit.description + " - " + str(current_streak))
+            
         current_streak_label.grid(row=1, column=0, padx=5, pady=5, sticky="nsew")
         
         longest_habit, longest_streak = analytics.get_longest_run_streak_all(self.controller.db)
         
-        longest_streak_label = tk.Label(self, text="Longest Ever Streak:\n" + longest_habit.description + " - " + str(longest_streak))
+        if longest_habit is None:
+            longest_streak_label = tk.Label(self, text="Longest Ever Streak:\nN/A")
+        else:
+            longest_streak_label = tk.Label(self, text="Longest Ever Streak:\n" + longest_habit.description + " - " + str(longest_streak))
+            
         longest_streak_label.grid(row=2, column=0, padx=5, pady=5, sticky="nsew")
         
         dropdown_frame = tk.Frame(self)
@@ -77,7 +86,9 @@ class DisplayAnalytics(tk.Frame):
         self.tree.grid(row=4, column=0, sticky="nsew", padx=10, pady=10)
         scrollbar.grid(row=4, column=1, sticky="ns", pady=10)
         
-        tk.Button(self, text="Back", command=self.controller.show_main_menu).grid(row=5, column=0, pady=5)
+        back_button = ttk.Button(self, text="Back", command=self.controller.show_main_menu)
+        back_button.grid(row=5, column=0, pady=5)
+        back_button.configure(style="Back.TButton")
         
         self.on_option_selected("All Habits")
  
@@ -132,3 +143,13 @@ class DisplayAnalytics(tk.Frame):
                 rows.append((habit.description, habit.frequency, longest_streak, current_streak))
 
             self.populate_tree(rows, columns=("Description", "Frequency", "Longest Streak", "Current Streak"))
+            
+        elif selected == "Completion Success (%)":
+            results = analytics.get_all_success_percentages(self.controller.db)
+
+            rows = []
+            for habit, success_percentage in results:
+                rows.append((habit, success_percentage + "%"))
+
+            self.populate_tree(rows, columns=("Description", "Success Percentage"))
+            

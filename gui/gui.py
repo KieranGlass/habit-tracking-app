@@ -8,6 +8,7 @@ from gui.habits import HabitView
 from gui.add_habit import AddHabitForm
 from gui.modify_habit import ModifyHabitForm
 from gui.display_analytics import DisplayAnalytics
+from gui import gui_styles
 
 """
     The Main Gui Class 
@@ -36,6 +37,7 @@ class Gui(tk.Tk):
         self.title("Habit Tracker")
         self.geometry("400x400")
         self.current_frame = None
+        gui_styles.apply_styles()
 
         # Set grid config so frames can expand
         self.columnconfigure(0, weight=1)

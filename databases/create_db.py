@@ -51,15 +51,17 @@ class Database:
                     )
                 ''')
                 
-                cursor.execute('''
-                INSERT OR IGNORE INTO habits (description, date_created, frequency)
-                    VALUES 
-                    ('Brush Teeth', '06/05/2025', 'Daily'),
-                    ('Visit Grandparents', '04/06/2025', 'Monthly'),
-                    ('Water Plants', '06/06/2025', 'Weekly'),
-                    ('Drink 2 Litres of Water', '04/04/2025', 'Daily'),
-                    ('Read a Book', '06/05/2025', 'Monthly')
-                ''')
+                cursor.execute("SELECT COUNT(*) FROM habits")
+                if cursor.fetchone()[0] == 0:
+                    cursor.execute('''
+                        INSERT INTO habits (description, date_created, frequency)
+                        VALUES 
+                        ('Brush Teeth', '06/05/2025', 'Daily'),
+                        ('Visit Grandparents', '04/06/2025', 'Monthly'),
+                        ('Water Plants', '06/06/2025', 'Weekly'),
+                        ('Drink 2 Litres of Water', '04/04/2025', 'Daily'),
+                        ('Read a Book', '06/05/2025', 'Monthly')
+                    ''')
         
                 cursor.execute('''
                     CREATE TABLE IF NOT EXISTS interactions (
@@ -70,22 +72,6 @@ class Database:
                         UNIQUE(habit_id, date)
                     )
                 ''')
-                
-                cursor.execute('''
-                INSERT OR IGNORE INTO interactions (habit_id, date)
-                    VALUES 
-                    (1, '02/05/2025'),
-                    (1, '04/07/2025'),
-                    (1, '06/07/2025'),
-                    (1, '07/07/2025'),
-                    (1, '08/07/2025'),
-                    (1, '09/07/2025'),
-                    (2, '04/06/2025'),
-                    (3, '06/06/2025'),
-                    (4, '04/04/2025'),
-                    (5, '06/05/2025')
-                ''')
-                
                 
                 self.conn.commit()
                 
