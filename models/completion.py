@@ -28,7 +28,6 @@ class Completion:
         self.habit_id = habit_id
         self.date = date
     
-    
     def save_to_db(self, db: Database):
         try:
             with closing(db.conn.cursor()) as cursor:
@@ -40,7 +39,6 @@ class Completion:
         except sqlite3.Error as e:
             print(f"Failed to insert interaction: {e}")
             
-    
     def get_all_completions(db):
         try:
             with closing(db.conn.cursor()) as cursor:
@@ -50,22 +48,20 @@ class Completion:
         except sqlite3.Error as e:
             print(f"Failed to get completions: {e}")
               
-    
     def get_completions_by_habit(db, habit_id):
         try:
             with closing(db.conn.cursor()) as cursor:
-                cursor.execute("SELECT id, date FROM interactions WHERE habit_id=?", (habit_id,))
+                cursor.execute("SELECT id, habit_id, date FROM interactions WHERE habit_id=?", (habit_id,))
                 interactions = cursor.fetchall()
-                return interactions
+                return [Completion(id, habit_id, date) for id, habit_id, date in interactions]
         except sqlite3.Error as e:
-            print(f"Failed to insert habit: {e}")
+            print(f"Failed to retrieve habit: {e}")
             
     def delete_completion(db, completion_id):
         try:
             with closing(db.conn.cursor()) as cursor:
                 cursor.execute("DELETE FROM interactions WHERE id=?", (completion_id,))
                 db.conn.commit()
-                messagebox.showinfo("Success", "Completion has been deleted")
             return True
         except sqlite3.Error as e:
             print(f"Delete error: {e}")

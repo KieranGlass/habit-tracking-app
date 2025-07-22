@@ -24,11 +24,11 @@ def test_fetch_habit(test_db):
     twelfth_habit = Habit.fetch_habit(test_db, 12)
     no_habit = Habit.fetch_habit(test_db, 9999)  # ID that doesn't exist
     
-    assert first_habit[0][1] == "Brush Teeth"
-    assert third_habit[0][2] == "06/06/2025"
-    assert seventh_habit[0][1] == "Shower"
-    assert twelfth_habit[0][3] == "Daily"
-    assert no_habit == []
+    assert first_habit.description == "Brush Teeth"
+    assert third_habit.date_created == "06/06/2025"
+    assert seventh_habit.description == "Shower"
+    assert twelfth_habit.frequency == "Daily"
+    assert no_habit == None
     
 def test_save_to_db(test_db):
     
@@ -38,15 +38,15 @@ def test_save_to_db(test_db):
     
     check_habit = Habit.fetch_habit(test_db, 15)
     
-    assert check_habit[0][0] == 15
-    assert check_habit[0][1] == "Moisturise"
+    assert check_habit.id == 15
+    assert check_habit.description == "Moisturise"
     
     
 def test_delete_habit(test_db):
     
     pre_deleted_habit = Habit.fetch_habit(test_db, 14)
     
-    assert pre_deleted_habit[0][1] == "Make the bed"
+    assert pre_deleted_habit.description == "Make the bed"
     
     Habit.delete(test_db, 14)
     

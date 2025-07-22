@@ -25,6 +25,7 @@ from contextlib import closing
 """
 class Habit:
     def __init__(self, id, description, date_created, frequency):
+        
         self.id = id
         self.description = description
         self.date_created = date_created
@@ -59,11 +60,13 @@ class Habit:
             rows = cursor.fetchall()
             return [Habit(*row) for row in rows]
         
-    def fetch_habit(db, id):
+    def fetch_habit(db, habit_id):
         with closing(db.conn.cursor()) as cursor:
-            cursor.execute("SELECT id, description, date_created, frequency FROM habits WHERE id=?", (id,))
-            habit = cursor.fetchall()
-            return habit
+            cursor.execute("SELECT id, description, date_created, frequency FROM habits WHERE id=?", (habit_id,))
+            row = cursor.fetchone()
+            if row:
+                return Habit(*row)
+            return None
         
     def get_habits_by_frequency(db, frequency):
         habits = Habit.fetch_all(db)

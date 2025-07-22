@@ -34,6 +34,7 @@ class Database:
         
         self.conn.execute("PRAGMA foreign_keys = ON")
     
+    
     def create_tables(self):
         '''
         Creates the db tables, and therefore the overall structure of the db.
@@ -51,16 +52,18 @@ class Database:
                     )
                 ''')
                 
+                
+                
                 cursor.execute("SELECT COUNT(*) FROM habits")
                 if cursor.fetchone()[0] == 0:
                     cursor.execute('''
                         INSERT INTO habits (description, date_created, frequency)
                         VALUES 
-                        ('Brush Teeth', '06/05/2025', 'Daily'),
-                        ('Visit Grandparents', '04/06/2025', 'Monthly'),
-                        ('Water Plants', '06/06/2025', 'Weekly'),
-                        ('Drink 2 Litres of Water', '04/04/2025', 'Daily'),
-                        ('Read a Book', '06/05/2025', 'Monthly')
+                        ('Brush Teeth', '21/07/2025', 'Daily'),
+                        ('Visit Grandparents', '21/07/2025', 'Monthly'),
+                        ('Water Plants', '21/07/2025', 'Weekly'),
+                        ('Drink 2 Litres of Water', '21/07/2025', 'Daily'),
+                        ('Read a Book', '21/07/2025', 'Monthly')
                     ''')
         
                 cursor.execute('''

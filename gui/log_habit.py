@@ -45,17 +45,20 @@ class LogHabit(tk.Frame):
 
         for col in ("id", "Description", "Frequency", "Last Completed"):
             self.tree.heading(col, text=col.title())
+            # hides the id column from view, but means id is still available for use elsewhere
             if col == "id":
                 self.tree.column(col, width=0, stretch=False)
             else:
                 self.tree.column(col, stretch=True, anchor="center", width=80)
                 
+        # Calendar
         self.calendar_frame = tk.Frame(self)
         self.calendar_frame.grid(row=2, column=0, padx=5, sticky="nsew")
         
         self.calendar_frame.grid_columnconfigure(0, weight=1)
         self.calendar_frame.grid_rowconfigure(0, weight=1)
                 
+        # maxdate prevents interaction into the future (error prevention)
         self.calendar = Calendar(self.calendar_frame, selectmode="day", date_pattern="y-mm-dd", maxdate=datetime.now().date(), background="#003366")
         self.calendar.grid(row=0, column=0, sticky="nsew")
 
@@ -82,14 +85,13 @@ class LogHabit(tk.Frame):
         for row in self.tree.get_children():
             self.tree.delete(row)
             
-
         habit = Habit.fetch_all(self.controller.db)
         for p in habit:
             interactions = Completion.get_completions_by_habit(self.controller.db, p.id)
             
             if interactions:
-                most_recent = max(interactions, key=lambda x: datetime.strptime(x[1], "%d/%m/%Y"))
-                last_completed = most_recent[1]
+                most_recent = max(interactions, key=lambda x: datetime.strptime(x.date, "%d/%m/%Y"))
+                last_completed = most_recent.date
             else:
                 last_completed = None
             
@@ -111,6 +113,7 @@ class LogHabit(tk.Frame):
             messagebox.showerror("Error", "Nothing Selected!")
             return
         
+        # this block handles when a user hasnt selected a date, assumes todays date
         if selected_date:
             interaction = Completion(None, habit_id, selected_date)
             interaction.save_to_db(self.controller.db)
@@ -135,14 +138,18 @@ class LogHabit(tk.Frame):
             messagebox.showerror("Error", "Nothing Selected!")
             return
         
+        # specific date must be selected for deletion
         if selected_date:
+            
+            # gets completions only for relevant habit
             interactions = Completion.get_completions_by_habit(self.controller.db, habit_id)
             
-            print(interactions)
-            
             for i in interactions:
+                
+                # deletes habit completion only for selected date as only one completion per habit can exist per date
                 if i[1] == selected_date:
                     Completion.delete_completion(self.controller.db, i[0])
+                    messagebox.showinfo("Success", "Completion has been deleted")
             
         else:
             messagebox.showerror("Error", "No Date Selected!")
@@ -167,7 +174,10 @@ class LogHabit(tk.Frame):
         interactions = Completion.get_completions_by_habit(self.controller.db, habit_id)
 
         # Highlight the dates on the calendar
-        for _, date_str in interactions:
+        for interaction in interactions:
+            id = interaction.id
+            date_str = interaction.date
+            
             try:
                 # Convert string to datetime object
                 date_obj = datetime.strptime(date_str, "%d/%m/%Y").date()
