@@ -1,5 +1,5 @@
 import pytest
-from analytics.analytics import get_longest_streak
+from analytics.analytics import get_longest_streak, get_success_percentage
 from datetime import datetime
 from collections import namedtuple
 
@@ -100,4 +100,12 @@ def test_daily_longest_streak_db(test_db):
     print(completions) 
     
     assert get_longest_streak(habit, completions) == 4
-
+    
+def test_weekly_longest_streak_db(test_db):
+    
+    habit = Habit.fetch_habit(test_db, 3)
+    completions = Completion.get_completions_by_habit(test_db, 3)
+    
+    print(completions) 
+    
+    assert get_longest_streak(habit, completions) == 3
