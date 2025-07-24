@@ -61,5 +61,13 @@ python main.py
 - 2 - Creating, Altering + Modifying Habits
 - 3 - Analytics Module
 
+## Run the Test Directory
+
+```
+
+python -m pytest
+
+```
+
 
 
