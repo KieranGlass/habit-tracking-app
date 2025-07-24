@@ -1,0 +1,11 @@
+"""
+
+This project to this point in time uses SQLite and Tkinter,
+which are both built-in Python modules.
+
+The only additional requirements for running at the moment is for testing
+the application
+
+"""
+
+pytest==8.4.1
