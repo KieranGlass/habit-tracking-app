@@ -4,6 +4,7 @@ from gui.gui import Gui
 import subprocess
 import sys
 
+""" Disabled Tests auto running for time being, this is a developer tool
 
 def run_tests():
     
@@ -19,10 +20,11 @@ def run_tests():
     print(result.stdout)
     if result.returncode != 0:
         print("Tests failed! Exiting.")
-        sys.exit(1)  # Stop running the program if tests fail, TODO handle this for production as test failure will make program unrunable
+        sys.exit(1)  # Stop running the program if tests fail
 
 run_tests()
 
+"""
 class App:
     
     '''   Main application class, run from main.py.
